@@ -1,0 +1,38 @@
+<h2>Contactez-nous</h2>
+<p>Remplissez le formulaire ci-dessous pour nous contacter ou vous inscrire à un cours.</p>
+
+<!-- Affichage des erreurs -->
+<% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+    <div class="error-messages">
+        <ul>
+            <% errors.forEach(function(error) { %>
+                <li><%= error %></li>
+            <% }); %>
+        </ul>
+    </div>
+<% } %>
+
+<form action="/contact" method="post">
+    <div class="form-group">
+        <label for="name">Nom complet</label>
+        <input type="text" id="name" name="name" value="<%= formData ? formData.name : '' %>" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" value="<%= formData ? formData.email : '' %>" required>
+    </div>
+    <div class="form-group">
+        <label for="course">Cours d'intérêt</label>
+        <select id="course" name="course" required>
+            <option value="">-- Sélectionnez un cours --</option>
+            <option value="intro-ia" <%= formData && formData.course === 'intro-ia' ? 'selected' : '' %>>Introduction à l'IA</option>
+            <option value="machine-learning" <%= formData && formData.course === 'machine-learning' ? 'selected' : '' %>>Machine Learning Fondamental</option>
+            <option value="deep-learning" <%= formData && formData.course === 'deep-learning' ? 'selected' : '' %>>Deep Learning Avancé</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required><%= formData ? formData.message : '' %></textarea>
+    </div>
+    <button type="submit" class="btn">Envoyer</button>
+</form>

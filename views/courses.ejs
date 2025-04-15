@@ -1,0 +1,44 @@
+
+  
+  <h2>Nos Cours</h2>
+  <p>Découvrez notre sélection de cours d'intelligence artificielle.</p>
+  
+  <!-- Formulaire de filtrage -->
+<form action="/courses" method="get">
+    <div class="form-group">
+      <label for="level">Filtrer par niveau</label>
+      <select id="level" name="level">
+        <option value="">-- Sélectionnez un niveau --</option>
+        <option value="Débutant">Débutant</option>
+        <option value="Intermédiaire">Intermédiaire</option>
+        <option value="Avancé">Avancé</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="price">Filtrer par prix</label>
+      <select id="price" name="price">
+        <option value="">-- Sélectionnez un prix --</option>
+        <option value="199">Moins de 200 €</option>
+        <option value="300">Moins de 300 €</option>
+        <option value="400">Moins de 400 €</option>
+      </select>
+    </div>
+    <button type="submit" class="btn">Filtrer</button>
+  </form>
+  
+  <p>Découvrez notre sélection de cours d'intelligence artificielle.</p>
+  
+  <div class="courses-container">
+  <% courses.forEach(course => { %>
+    <div class="course-card">
+      <h3><%= course.title %></h3>
+      <p><%= course.description %></p>
+      <div class="course-details">
+        <span class="price"><%= course.price %> €</span>
+        <span class="level"><%= course.level %></span>
+      </div>
+      <a href="/contact" class="btn">S'inscrire</a>
+    </div>
+  <% }); %>
+  </div>
+  

@@ -1,0 +1,47 @@
+<h2>Liste des abonnés</h2>
+
+<!-- Affichage d'un message (si défini) -->
+<% if (typeof message !== 'undefined' && message) { %>
+  <p><%= message %></p>
+<% } %>
+
+<!-- Formulaire de recherche -->
+<form action="/subscribers/search" method="get">
+  <input type="text" name="name" placeholder="Nom" />
+  <input type="text" name="postalCode" placeholder="Code postal" />
+  <button type="submit">Rechercher</button>
+</form>
+
+
+
+<!-- Affichage de la liste complète des abonnés (si disponibles) -->
+<% if (subscribers && subscribers.length > 0) { %>
+  <h2>Liste complète des abonnés :</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Code Postal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% subscribers.forEach(subscriber => { %>
+        <tr>
+          <td>
+            <a href="/subscribers/<%= subscriber._id %>">
+              <%= subscriber.name %>
+            </a>
+          </td>
+          <td><%= subscriber.email %></td>
+          <td><%= subscriber.postalCode %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+<% } else { %>
+  <p>Aucun abonné trouvé.</p>
+<% } %>
+
+<!-- Lien pour créer un nouvel abonné -->
+<a href="/subscribers/new" class="btn btn-secondary">Créer un nouvel abonné</a>
