@@ -8,6 +8,9 @@ const mongoose = require("mongoose"); // Ajout de Mongoose
 const homeController = require("./controllers/homeController");
 const errorController = require("./controllers/errorController");
 const subscribersController = require("./controllers/subscribersController");
+// Ajoutez les contrôleurs pour lab8
+const usersController = require("./controllers/usersController");
+const coursesController = require("./controllers/coursesController");
 
 // Configuration de la connexion à MongoDB
 mongoose.connect(
@@ -44,15 +47,39 @@ app.use(
 );
 app.use(flash());
 
+// Ajouter le middleware method-override pour lab8
+const methodOverride = require("method-override");
+app.use(methodOverride("_method", {
+    methods: ["POST", "GET"]
+
+}));
+
 // Servir les fichiers statiques
 app.use(express.static("public"));
 // Définir les routes
 app.get("/", homeController.index);
 app.get("/about", homeController.about);
-app.get("/courses", homeController.courses);
+// app.get("/courses", homeController.courses);
 app.get("/contact", homeController.contact);
 app.post("/contact", homeController.processContact);
 app.get("/faq", homeController.faq);
+
+// Routes pour les utilisateurs lab8
+app.get("/users", usersController.index, usersController.indexView);
+app.get("/users/new", usersController.new);
+app.post("/users/create", usersController.create, usersController.redirectView);
+app.get("/users/:id", usersController.show, usersController.showView);
+app.get("/users/:id/edit", usersController.edit);
+app.put("/users/:id/update", usersController.update, usersController.redirectView);
+app.delete("/users/:id/delete", usersController.delete, usersController.redirectView);
+// Routes pour les cours
+app.get("/courses", coursesController.index, coursesController.indexView);
+app.get("/courses/new", coursesController.new);
+app.post("/courses/create", coursesController.create, coursesController.redirectView);
+app.get("/courses/:id", coursesController.show, coursesController.showView);
+app.get("/courses/:id/edit", coursesController.edit);
+app.put("/courses/:id/update", coursesController.update, coursesController.redirectView);
+app.delete("/courses/:id/delete", coursesController.delete, coursesController.redirectView);
 
 
 // Routes pour les abonnés
