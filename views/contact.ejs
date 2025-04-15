@@ -1,0 +1,42 @@
+<h2>Contactez-nous</h2>
+<% if (messages.success && messages.success.length> 0) { %>
+    <div class="alert alert-success">
+        <% messages.succes.forEach(function(msg) { %>
+            <p>
+                <%=msg %>
+            </p>
+            <% }) %>
+    </div>
+    <% } %>
+        <!-- <% if (errors && errors.length> 0) { %>
+            <div class="notification error">
+                <%= errors[0] %>
+            </div>
+            <% } %> -->
+
+
+        <!-- <p>Remplissez le formulaire ci-dessous pour nous contacter ou vous inscrire à un cours.</p>
+                <form action="/contact" method="post">
+                    <div class="form-group">
+                        <label for="name">Nom complet</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="course">Cours d'intérêt</label>
+                        <select id="course" name="course">
+                            <option value="">-- Sélectionnez un cours --</option>
+                            <option value="intro-ia">Introduction à l'IA</option>
+                            <option value="machine-learning">Machine Learning Fondamental</option>
+                            <option value="deep-learning">Deep Learning Avancé</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5"></textarea>
+                    </div>
+                    <button type="submit" class="btn">Envoyer</button>
+                </form> -->
