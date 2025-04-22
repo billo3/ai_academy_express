@@ -2,15 +2,18 @@ const express = require("express");
 //pour le lab6
 const session = require("express-session");
 const flash = require("connect-flash");
-
+const cookieParser = require("cookie-parser");
+const passport = require("passport");
 const layouts = require("express-ejs-layouts");
 const mongoose = require("mongoose"); // Ajout de Mongoose
+
 const homeController = require("./controllers/homeController");
 const errorController = require("./controllers/errorController");
 const subscribersController = require("./controllers/subscribersController");
 // Ajoutez les contrôleurs pour lab8
 const usersController = require("./controllers/usersController");
 const coursesController = require("./controllers/coursesController");
+const authController = require("./controllers/authController");
 
 // Configuration de la connexion à MongoDB
 mongoose.connect(
@@ -23,10 +26,6 @@ db.once("open", () => {
     console.log("Connexion réussie à MongoDB en utilisant Mongoose!");
 });
 
-// const express = require("express");
-// const layouts = require("express-ejs-layouts");
-// const homeController = require("./controllers/homeController");
-// const errorController = require("./controllers/errorController");
 const app = express();
 // Définir le port
 app.set("port", process.env.PORT || 3001);
@@ -46,6 +45,35 @@ app.use(
     session({ secret: "Siyaar", resave: false, saveUninitialized: true })
 );
 app.use(flash());
+
+// Configuration des cookies et des sessions lab9
+app.use(cookieParser("secret_passcode"));
+app.use(session({
+    secret: "secret_passcode",
+    cookie: {
+        maxAge: 4000000
+    },
+    resave: false,
+    saveUninitialized: false
+}));
+// Configuration de flash messages
+app.use(flash());
+// Configuration de Passport
+app.use(passport.initialize());
+app.use(passport.session());
+// Configuration du User model pour Passport
+const User = require("./models/user");
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+// Middleware pour rendre les variables locales disponibles dans toutes les vues
+app.use((req, res, next) => {
+    res.locals.flashMessages = req.flash();
+    res.locals.loggedIn = req.isAuthenticated();
+    res.locals.currentUser = req.user;
+    next();
+});
+
 
 // Ajouter le middleware method-override pour lab8
 const methodOverride = require("method-override");
@@ -92,6 +120,16 @@ app.get("/subscribers/:id/edit", subscribersController.edit);
 app.post("/subscribers/:id/update", subscribersController.update);
 app.get("/subscribers/search", subscribersController.search);
 
+// Routes d'authentification lab9
+app.get("/login", authController.login);
+app.post("/login", authController.authenticate);
+app.get("/logout", authController.logout, usersController.redirectView);
+app.get("/signup", authController.signup);
+app.post("/signup", authController.register, usersController.redirectView);
+// Routes protégées - accessibles uniquement aux utilisateurs connectés
+app.use("/users", authController.ensureLoggedIn);
+app.use("/courses/new", authController.ensureLoggedIn);
+app.use("/courses/:id/edit", authController.ensureLoggedIn);
 
 app.post("/subscribers/create", async (req, res) => {
     const { name, email, postalCode } = req.body;
