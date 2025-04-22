@@ -25,6 +25,7 @@ const userSchema = new Schema(
             min: [10000, "Code postal trop court"],
             max: 99999
         },
+        // Pour le mot de passe, on utilise passport-local-mongoose pour gérer le hashage et la validation
         // password: {
         //     type: String,
         //     required: true
