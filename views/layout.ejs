@@ -6,6 +6,7 @@
 <title>AI Academy - <%= typeof pageTitle !== 'undefined' ? pageTitle : 'Accueil' %></title>
 <link rel="stylesheet" href="/css/styles.css">
 
+
 </head>
 <body>
 <header>
@@ -21,14 +22,20 @@
 <li><a href="/subscribers">Abonnés</a></li>
 <% if (loggedIn) { %>
 <li><a href="/users">Utilisateurs</a></li>
-<li><a href="/users/<%= currentUser._id %>">Mon Profil</a></li>
-
-<li><a href="/logout">Se déconnecter</a></li>
+<li>
+<a href="/users/<%= currentUser._id %>">
+Mon Profil
+</a>
+</li>
+<li>
+<a href="/logout">Se déconnecter</a>
+</li>
 <% } else { %>
 <li><a href="/login">Se connecter</a></li>
 <li><a href="/signup">S'inscrire</a></li>
 <% } %>
 <li><a href="/contact">Contact</a></li>
+<li><a href="/api/documentation">API Docs</a></li>
 </ul>
 </nav>
 </header>
@@ -46,6 +53,7 @@
 <% } %>
 <% } %>
 </div>
+
 
 <main>
 <%- body %>
