@@ -44,40 +44,14 @@ app.get("/contact", homeController.getContact);
 app.post("/contact", homeController.processContact);
 app.get("/faq", homeController.faq);
 
+// Route de recherche (doit venir avant :id)
+app.get('/subscribers/search', subscribersController.search);
+
 // ROUTES DES ABONNÉS
 
-// 🔍 Route de recherche (à placer AVANT les routes dynamiques)
-app.get("/subscribers/search", async (req, res) => {
-  const { name, postalCode } = req.query;
-  const searchCriteria = {};
-  if (name) searchCriteria.name = { $regex: name, $options: 'i' };
-  if (postalCode) searchCriteria.postalCode = postalCode;
-
-  try {
-    const subscribers = await Subscriber.find(searchCriteria);
-    if (subscribers.length === 0) {
-      return res.render("index", {
-        message: "Aucun abonné trouvé avec ces critères.",
-        subscribers: [],
-      });
-    }
-    return res.render("index", {
-      message: "Abonnés trouvés",
-      subscribers: subscribers,
-    });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).send('Erreur lors de la recherche des abonnés');
-  }
-});
-
-// 👤 Autres routes abonné
 app.get("/subscribers", subscribersController.getAllSubscribers);
 app.get("/subscribers/new", subscribersController.getSubscriptionPage);
 app.post("/subscribers/create", subscribersController.saveSubscriber);
-app.get("/subscribers/:id/edit", subscribersController.edit);
-app.post("/subscribers/:id/update", subscribersController.update);
-app.post("/subscribers/:id/delete", subscribersController.delete);
 app.get("/subscribers/:id", subscribersController.show);
 
 

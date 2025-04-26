@@ -8,9 +8,10 @@
 <!-- Formulaire de recherche -->
 <form action="/subscribers/search" method="get">
   <input type="text" name="name" placeholder="Nom" />
-  <input type="text" name="postalCode" placeholder="Code postal" />
+  <input type="text" name="zipCode" placeholder="Code postal" />
   <button type="submit">Rechercher</button>
 </form>
+
 
 
 
@@ -34,7 +35,8 @@
             </a>
           </td>
           <td><%= subscriber.email %></td>
-          <td><%= subscriber.postalCode %></td>
+          <td><%= subscriber.zipCode %></td>
+
         </tr>
       <% }); %>
     </tbody>
