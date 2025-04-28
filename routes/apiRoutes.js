@@ -37,6 +37,7 @@ router.delete("/users/:id", apiController.deleteUser, apiController.respondJSON)
 
 // Cours
 router.get("/courses", apiController.getAllCourses, apiController.respondJSON);
+// router.get('/courses/new', courseController.renderNewCourseForm); // doit être avant
 router.get("/courses/:id", apiController.getCourseById, apiController.respondJSON);
 router.post("/courses", apiController.validateCourseParams, apiController.createCourse, apiController.respondJSON);
 router.put("/courses/:id", apiController.validateCourseParams, apiController.updateCourse, apiController.respondJSON);

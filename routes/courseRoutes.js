@@ -8,10 +8,10 @@ const { isTeacherOrAdmin } = require("../middlewares/authorization");
 // Accès libre
 router.get("/", coursesController.index, coursesController.indexView);
 router.get("/search", coursesController.search, coursesController.searchView);
+router.get("/new", authController.ensureLoggedIn, isTeacherOrAdmin, coursesController.new);
 router.get("/:id", coursesController.show, coursesController.showView);
 
 // Protégées
-router.get("/new", authController.ensureLoggedIn, isTeacherOrAdmin, coursesController.new);
 router.post("/create", authController.ensureLoggedIn, isTeacherOrAdmin, coursesController.create, coursesController.redirectView);
 router.get("/:id/edit", authController.ensureLoggedIn, isTeacherOrAdmin, coursesController.edit);
 router.put("/:id/update", authController.ensureLoggedIn, isTeacherOrAdmin, coursesController.update, coursesController.redirectView);

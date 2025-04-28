@@ -4,15 +4,15 @@ const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'julcisse00@gmail.com', 
-    pass: 'wismesegrptlvxmi'     
+    user: 'julcisse00@gmail.com',
+    pass: 'wismesegrptlvxmi'
   }
 });
 
 module.exports = {
   sendPasswordResetEmail: async (email, token) => {
-    const resetUrl = `http://localhost:3000/reset-password/${token}`;
-    
+    const resetUrl = `http://localhost:3001/reset-password/${token}`;
+
     const mailOptions = {
       from: 'AI Academy <votre-email@gmail.com>',
       to: email,
@@ -26,7 +26,7 @@ module.exports = {
         <p>Si vous n'avez pas demandé cette réinitialisation, veuillez ignorer cet email.</p>
       `
     };
-    
+
     try {
       await transporter.sendMail(mailOptions);
       return true;

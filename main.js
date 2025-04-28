@@ -5,13 +5,13 @@ const flash = require("connect-flash");
 const passport = require('./config/passport');
 const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
-const httpStatus = require("http-status-codes"); 
+const httpStatus = require("http-status-codes");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
 
 //const authRoutes = require("./routes/authRoutes");
 const mongoose = require("mongoose");
-const appRoutes = require("./routes"); 
+const appRoutes = require("./routes");
 const User = require("./models/user");
 
 
@@ -27,7 +27,7 @@ db.once("open", () => {
 const app = express();
 
 // Configuration Express
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || 3001);
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(layouts);
@@ -65,7 +65,7 @@ app.use((req, res, next) => {
 });
 // Auth Google
 app.get("/auth/google", passport.authenticate("google", { scope: ['profile', 'email'] }));
-app.get("/auth/google/callback", 
+app.get("/auth/google/callback",
   passport.authenticate("google", {
     failureRedirect: "/login",
     failureFlash: true,
@@ -87,7 +87,7 @@ app.use(errorController.pageNotFoundError);
 app.use(errorController.internalServerError);
 
 // Démarrage du serveur
-app.listen(app.get("port"), () => { 
-  console.log(`Le serveur a démarré et écoute sur le port: ${app.get("port")}`);   console.log(`Serveur accessible à l'adresse: http://localhost:${app.get("port")}`); 
-}); 
+app.listen(app.get("port"), () => {
+  console.log(`Le serveur a démarré et écoute sur le port: ${app.get("port")}`); console.log(`Serveur accessible à l'adresse: http://localhost:${app.get("port")}`);
+});
 
